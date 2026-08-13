@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Funbox 戰鬥陀螺 LINE 抽選門市導覽：依北、桃竹苗、中部、南部、東部分類，定位最近門市並一鍵加入 LINE。"
+    />
+    <title>Funbox LINE 抽選門市</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <div class="header-row">
+          <div>
+            <p class="kicker">BEYBLADE DRAW</p>
+            <h1>Funbox LINE 抽選門市</h1>
+            <p class="lede">
+              依地區找到最近的 Funbox 門市，加入官方 LINE，取得抽選資訊。
+            </p>
+          </div>
+          <button id="locate-btn" class="locate-btn" type="button">定位最近門市</button>
+        </div>
+        <p class="note">
+          非官方整理。僅列出目前有公開 LINE 加好友網址的抽選門市，活動以各店粉專與 LINE 公告為準。
+        </p>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <div class="toolbar">
+        <label class="search-wrap">
+          <span class="sr-only">搜尋門市</span>
+          <svg class="search-icon" viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="7" cy="7" r="4.25" fill="none" stroke="currentColor" stroke-width="1.4" />
+            <path d="M10.4 10.4 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="square" />
+          </svg>
+          <input
+            id="search"
+            class="search-input"
+            type="search"
+            placeholder="搜尋店名或商場，例如：板橋・LaLaport・漢神"
+          />
+        </label>
+        <nav id="region-filters" class="region-nav" aria-label="地區"></nav>
+      </div>
+
+      <p id="status" class="status"></p>
+      <div id="store-list"></div>
+      <p id="empty" class="empty" hidden>沒有符合的門市，試試其他關鍵字或切換區域。</p>
+    </main>
+
+    <footer class="site-footer">Funbox LINE 抽選門市 · 非官方</footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

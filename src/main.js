@@ -1,0 +1,270 @@
+import "./style.css";
+import { REGIONS, stores } from "./stores.js";
+
+const listEl = document.getElementById("store-list");
+const empty = document.getElementById("empty");
+const statusEl = document.getElementById("status");
+const searchInput = document.getElementById("search");
+const locateBtn = document.getElementById("locate-btn");
+const filtersEl = document.getElementById("region-filters");
+
+const state = {
+  region: "all",
+  query: "",
+  userLocation: null,
+  nearestId: null,
+  geoError: "",
+};
+
+function haversineKm(lat1, lng1, lat2, lng2) {
+  const toRad = (n) => (n * Math.PI) / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLng = toRad(lng2 - lng1);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+  return 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function formatDistance(km) {
+  if (km < 1) return `${Math.round(km * 1000)} m`;
+  return `${km.toFixed(km < 10 ? 1 : 0)} km`;
+}
+
+function regionMeta(id) {
+  return REGIONS.find((region) => region.id === id);
+}
+
+function mapsUrl(store) {
+  const q = encodeURIComponent(`Funbox ${store.mall} ${store.city}`);
+  return `https://www.google.com/maps/search/?api=1&query=${q}`;
+}
+
+function withDistance(list) {
+  if (!state.userLocation) {
+    return list.map((store) => ({ ...store, distanceKm: null }));
+  }
+  const { lat, lng } = state.userLocation;
+  return list.map((store) => ({
+    ...store,
+    distanceKm: haversineKm(lat, lng, store.lat, store.lng),
+  }));
+}
+
+function filteredStores() {
+  const query = state.query.trim().toLowerCase();
+  let list = withDistance(stores);
+
+  if (state.region !== "all") {
+    list = list.filter((store) => store.region === state.region);
+  }
+
+  if (query) {
+    list = list.filter((store) => {
+      const haystack = `${store.name} ${store.mall} ${store.city}`.toLowerCase();
+      return haystack.includes(query);
+    });
+  }
+
+  list.sort((a, b) => {
+    if (a.distanceKm != null && b.distanceKm != null) {
+      return a.distanceKm - b.distanceKm;
+    }
+    if (a.region === b.region) return a.name.localeCompare(b.name, "zh-Hant");
+    return REGIONS.findIndex((r) => r.id === a.region) - REGIONS.findIndex((r) => r.id === b.region);
+  });
+
+  return list;
+}
+
+function renderFilters() {
+  const counts = Object.fromEntries(REGIONS.map((r) => [r.id, stores.filter((s) => s.region === r.id).length]));
+  const chips = [
+    { id: "all", label: "全部", count: stores.length },
+    ...REGIONS.map((region) => ({
+      id: region.id,
+      label: region.label,
+      count: counts[region.id],
+    })),
+  ];
+
+  filtersEl.innerHTML = chips
+    .map((chip) => {
+      const activeClass = state.region === chip.id ? "is-active" : "";
+      return `
+        <button type="button" data-region="${chip.id}" class="${activeClass}">
+          ${chip.label} <span class="count">${chip.count}</span>
+        </button>
+      `;
+    })
+    .join("");
+}
+
+const iconPlus = `<svg class="icon" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5v9M1.5 6h9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>`;
+const iconOut = `<svg class="icon" viewBox="0 0 12 12" aria-hidden="true"><path d="M5 2h5v5M10 2 5 7M2 4.5V10h5.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square" stroke-linejoin="miter"/></svg>`;
+const iconPin = `<svg class="icon" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M6 1v2.2M6 8.8V11M1 6h2.2M8.8 6H11" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></svg>`;
+
+function cardHtml(store, isNearest) {
+  const distanceLabel = store.distanceKm != null ? formatDistance(store.distanceKm) : "";
+  const nearest = isNearest
+    ? `<p class="nearest-mark">● 距離最近${distanceLabel ? ` · ${distanceLabel}` : ""}</p>`
+    : "";
+  const distance =
+    !isNearest && distanceLabel ? `<p class="store-distance">${distanceLabel}</p>` : "";
+
+  return `
+    <article class="store-card${isNearest ? " is-nearest" : ""}">
+      <div class="store-copy">
+        ${nearest}
+        <h3 class="store-name">${store.name}</h3>
+        <p class="store-mall">${store.mall}</p>
+        ${distance}
+      </div>
+      <div class="store-actions">
+        <a class="action-btn line-btn" href="${store.line}" target="_blank" rel="noopener noreferrer">${iconPlus} 加入 LINE</a>
+        <a class="action-btn secondary-btn" href="${store.facebook}" target="_blank" rel="noopener noreferrer">${iconOut} 粉專</a>
+        <a class="action-btn secondary-btn" href="${mapsUrl(store)}" target="_blank" rel="noopener noreferrer">${iconPin} 地圖</a>
+      </div>
+    </article>
+  `;
+}
+
+function groupBlock(title, items, nearestId) {
+  return `
+    <section class="store-group">
+      <h2 class="group-label">${title} <span class="count">· ${items.length} 間</span></h2>
+      <div class="store-grid">
+        ${items.map((store) => cardHtml(store, store.id === nearestId)).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function groupedHtml(list, nearestId) {
+  if (state.userLocation) {
+    return groupBlock("依距離", list, nearestId);
+  }
+
+  const groups = [];
+  for (const store of list) {
+    const last = groups[groups.length - 1];
+    if (!last || last.id !== store.region) {
+      groups.push({ id: store.region, items: [store] });
+    } else {
+      last.items.push(store);
+    }
+  }
+
+  return groups
+    .map((group) => groupBlock(regionMeta(group.id).label, group.items, nearestId))
+    .join("");
+}
+
+function renderStatus(list) {
+  if (state.geoError) {
+    statusEl.textContent = state.geoError;
+    return;
+  }
+  if (state.userLocation && state.nearestId) {
+    const nearest = stores.find((store) => store.id === state.nearestId);
+    const shownNearest = list[0];
+    if (state.region === "all" && !state.query && shownNearest) {
+      statusEl.textContent = `已依距離排序 · 最近是 ${nearest.name}（${formatDistance(shownNearest.distanceKm)}）`;
+      return;
+    }
+    statusEl.textContent = `已取得定位，目前顯示 ${list.length} 家門市`;
+    return;
+  }
+  statusEl.textContent = `共 ${list.length} 家可加入 LINE 抽選的門市`;
+}
+
+function render() {
+  renderFilters();
+  const list = filteredStores();
+  const nearestId = state.nearestId;
+
+  if (!list.length) {
+    listEl.innerHTML = "";
+    empty.hidden = false;
+  } else {
+    empty.hidden = true;
+    listEl.innerHTML = groupedHtml(list, nearestId);
+  }
+
+  renderStatus(list);
+}
+
+filtersEl.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-region]");
+  if (!button) return;
+  state.region = button.dataset.region;
+  render();
+});
+
+searchInput.addEventListener("input", (event) => {
+  state.query = event.target.value;
+  render();
+});
+
+locateBtn.addEventListener("click", () => {
+  if (!navigator.geolocation) {
+    state.geoError = "這個瀏覽器不支援定位，請改用區域篩選。";
+    render();
+    return;
+  }
+
+  if (!window.isSecureContext) {
+    state.geoError = "本機用 http 開網站時，手機不允許定位。上線到 GitHub Pages（https）後即可使用；現在可改點上方地區。";
+    render();
+    return;
+  }
+
+  locateBtn.disabled = true;
+  locateBtn.textContent = "定位中…";
+  statusEl.textContent = "正在取得你的位置…";
+
+  const onSuccess = (position) => {
+    state.userLocation = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+    };
+    const ranked = withDistance(stores).sort((a, b) => a.distanceKm - b.distanceKm);
+    state.nearestId = ranked[0]?.id ?? null;
+    state.geoError = "";
+    state.region = "all";
+    locateBtn.disabled = false;
+    locateBtn.textContent = "已定位 · 再找一次";
+    render();
+  };
+
+  const failMessage = (error) => {
+    if (error?.code === 1) {
+      return "定位權限被拒絕。請在手機瀏覽器允許「位置」，或改用地區篩選。";
+    }
+    if (error?.code === 3) {
+      return "定位逾時。請到訊號較好處再試，或改用地區篩選。";
+    }
+    return "無法取得定位。仍可用上方區域與搜尋找店。";
+  };
+
+  const onFail = (error) => {
+    navigator.geolocation.getCurrentPosition(
+      onSuccess,
+      (retryError) => {
+        state.geoError = failMessage(retryError || error);
+        locateBtn.disabled = false;
+        locateBtn.textContent = "定位最近門市";
+        render();
+      },
+      { enableHighAccuracy: false, timeout: 12000, maximumAge: 60000 }
+    );
+  };
+
+  navigator.geolocation.getCurrentPosition(onSuccess, onFail, {
+    enableHighAccuracy: true,
+    timeout: 8000,
+    maximumAge: 60000,
+  });
+});
+
+render();
