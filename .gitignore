@@ -2,3 +2,8 @@ node_modules
 dist
 .DS_Store
 *.local
+tmp-funbox-line.html
+parse-draws.mjs
+parsed-draws.json
+src/draws-data.json
+

@@ -1,5 +1,6 @@
 import "./style.css";
 import { REGIONS, stores } from "./stores.js";
+import { DRAW_CITIES, draws } from "./draws.js";
 
 const listEl = document.getElementById("store-list");
 const empty = document.getElementById("empty");
@@ -7,13 +8,22 @@ const statusEl = document.getElementById("status");
 const searchInput = document.getElementById("search");
 const locateBtn = document.getElementById("locate-btn");
 const filtersEl = document.getElementById("region-filters");
+const pageNav = document.getElementById("page-nav");
+const VISITED_KEY = "visited_draw_urls";
+
+function pageFromHash() {
+  return location.hash === "#stores" ? "stores" : "draws";
+}
 
 const state = {
+  page: pageFromHash(),
   region: "all",
+  city: "all",
   query: "",
   userLocation: null,
   nearestId: null,
   geoError: "",
+  visited: new Set(JSON.parse(localStorage.getItem(VISITED_KEY) || "[]")),
 };
 
 function haversineKm(lat1, lng1, lat2, lng2) {
@@ -78,6 +88,28 @@ function filteredStores() {
 }
 
 function renderFilters() {
+  if (state.page === "draws") {
+    const chips = [
+      { id: "all", label: "全部", count: draws.length },
+      ...DRAW_CITIES.map((city) => ({
+        id: city,
+        label: city,
+        count: draws.filter((store) => store.city === city).length,
+      })),
+    ];
+    filtersEl.innerHTML = chips
+      .map((chip) => {
+        const activeClass = state.city === chip.id ? "is-active" : "";
+        return `
+          <button type="button" data-city="${chip.id}" class="${activeClass}">
+            ${chip.label} <span class="count">${chip.count}</span>
+          </button>
+        `;
+      })
+      .join("");
+    return;
+  }
+
   const counts = Object.fromEntries(REGIONS.map((r) => [r.id, stores.filter((s) => s.region === r.id).length]));
   const chips = [
     { id: "all", label: "全部", count: stores.length },
@@ -161,6 +193,10 @@ function groupedHtml(list, nearestId) {
 }
 
 function renderStatus(list) {
+  if (state.page === "draws") {
+    statusEl.textContent = `共 ${list.length} 家有陀螺抽選的門市 · ${list.reduce((n, store) => n + store.items.length, 0)} 個抽獎連結`;
+    return;
+  }
   if (state.geoError) {
     statusEl.textContent = state.geoError;
     return;
@@ -178,8 +214,119 @@ function renderStatus(list) {
   statusEl.textContent = `共 ${list.length} 家可加入 LINE 抽選的門市`;
 }
 
+function renderPageNav() {
+  pageNav.innerHTML = `
+    <button type="button" data-page="draws" class="${state.page === "draws" ? "is-active" : ""}">
+      陀螺抽選 <span class="count">${draws.length}</span>
+    </button>
+    <button type="button" data-page="stores" class="${state.page === "stores" ? "is-active" : ""}">
+      LINE 門市 <span class="count">${stores.length}</span>
+    </button>
+  `;
+}
+
+function filteredDraws() {
+  const query = state.query.trim().toLowerCase();
+  let list = draws.slice();
+
+  if (state.city !== "all") {
+    list = list.filter((store) => store.city === state.city);
+  }
+
+  if (query) {
+    list = list.filter((store) => {
+      const haystack = `${store.name} ${store.city} ${store.items.map((item) => item.product).join(" ")}`.toLowerCase();
+      return haystack.includes(query);
+    });
+  }
+
+  return list;
+}
+
+function drawCardHtml(store) {
+  const notes = store.notes.map((note) => `<p class="draw-note">${note}</p>`).join("");
+  const items = store.items
+    .map((item) => {
+      const visited = state.visited.has(item.url) ? " is-visited" : "";
+      return `
+        <div class="draw-item">
+          <span class="draw-product">${item.product}</span>
+          <a class="action-btn line-btn draw-btn${visited}" href="${item.url}" target="_blank" rel="noopener noreferrer" data-draw-url="${item.url}">抽獎</a>
+        </div>
+      `;
+    })
+    .join("");
+
+  return `
+    <article class="draw-card">
+      <h3 class="store-name">${store.name}</h3>
+      <p class="draw-meta">${store.city} · 開始 ${store.startTime}</p>
+      ${notes}
+      <div class="draw-items">${items}</div>
+    </article>
+  `;
+}
+
+function groupedDrawHtml(list) {
+  const groups = [];
+  for (const store of list) {
+    const last = groups[groups.length - 1];
+    if (!last || last.city !== store.city) {
+      groups.push({ city: store.city, items: [store] });
+    } else {
+      last.items.push(store);
+    }
+  }
+
+  return groups
+    .map(
+      (group) => `
+        <section class="store-group">
+          <h2 class="group-label">${group.city} <span class="count">· ${group.items.length} 間</span></h2>
+          <div class="draw-grid">
+            ${group.items.map(drawCardHtml).join("")}
+          </div>
+        </section>
+      `
+    )
+    .join("");
+}
+
+function setPage(page) {
+  state.page = page;
+  state.query = "";
+  searchInput.value = "";
+  const hash = page === "stores" ? "#stores" : "#draws";
+  if (location.hash !== hash) {
+    history.replaceState(null, "", hash);
+  }
+  render();
+}
+
 function render() {
+  document.body.classList.toggle("is-draws", state.page === "draws");
+  renderPageNav();
   renderFilters();
+  searchInput.placeholder =
+    state.page === "draws"
+      ? "搜尋門市或品名，例如：忠孝、惡魔戰錘、CX-18"
+      : "搜尋店名或商場，例如：板橋・LaLaport・漢神";
+
+  if (state.page === "draws") {
+    const list = filteredDraws();
+    empty.textContent = "沒有符合的抽選門市，試試其他關鍵字或切換縣市。";
+    if (!list.length) {
+      listEl.innerHTML = "";
+      empty.hidden = false;
+    } else {
+      empty.hidden = true;
+      listEl.innerHTML = groupedDrawHtml(list);
+    }
+    renderStatus(list);
+    return;
+  }
+
+  empty.textContent = "沒有符合的門市，試試其他關鍵字或切換區域。";
   const list = filteredStores();
   const nearestId = state.nearestId;
 
@@ -194,16 +341,42 @@ function render() {
   renderStatus(list);
 }
 
+pageNav.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-page]");
+  if (!button) return;
+  setPage(button.dataset.page);
+});
+
 filtersEl.addEventListener("click", (event) => {
+  const cityBtn = event.target.closest("[data-city]");
+  if (cityBtn) {
+    state.city = cityBtn.dataset.city;
+    render();
+    return;
+  }
   const button = event.target.closest("[data-region]");
   if (!button) return;
   state.region = button.dataset.region;
   render();
 });
 
+listEl.addEventListener("click", (event) => {
+  const link = event.target.closest("[data-draw-url]");
+  if (!link) return;
+  const url = link.dataset.drawUrl;
+  state.visited.add(url);
+  localStorage.setItem(VISITED_KEY, JSON.stringify([...state.visited]));
+  link.classList.add("is-visited");
+});
+
 searchInput.addEventListener("input", (event) => {
   state.query = event.target.value;
   render();
+});
+
+window.addEventListener("hashchange", () => {
+  const next = pageFromHash();
+  if (next !== state.page) setPage(next);
 });
 
 locateBtn.addEventListener("click", () => {

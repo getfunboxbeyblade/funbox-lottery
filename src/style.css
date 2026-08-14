@@ -83,6 +83,41 @@ body {
   font-size: 12px;
 }
 
+.page-nav {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.page-nav button {
+  margin-bottom: -1px;
+  padding: 8px 14px 10px 0;
+  margin-right: 18px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.page-nav button:hover {
+  color: var(--text);
+}
+
+.page-nav button.is-active {
+  color: var(--meta);
+  border-bottom-color: var(--meta);
+}
+
+.page-nav .count {
+  margin-left: 4px;
+  opacity: 0.7;
+}
+
 .locate-btn {
   flex-shrink: 0;
   margin-top: 2px;
@@ -111,6 +146,10 @@ body {
 .locate-btn:disabled {
   cursor: wait;
   opacity: 0.45;
+}
+
+body.is-draws .locate-btn {
+  display: none;
 }
 
 .toolbar {
@@ -373,6 +412,85 @@ body {
   background: transparent;
   border-color: #3a4048;
   color: #b8bec7;
+}
+
+.draw-card {
+  padding: 16px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: var(--card);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+.draw-card:hover {
+  background: #202429;
+  border-color: #3c424a;
+}
+
+.draw-meta {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.draw-note {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.draw-items {
+  margin-top: 12px;
+  border-top: 1px solid var(--hairline);
+}
+
+.draw-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.draw-item:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.draw-product {
+  min-width: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.draw-btn.is-visited {
+  background: transparent;
+  border-color: #3a4048;
+  color: #8a8f96;
+  box-shadow: none;
+  transform: none;
+}
+
+.draw-btn.is-visited:hover {
+  background: #252a30;
+  border-color: #59616c;
+  color: #fff;
+}
+
+.draw-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 900px) {
+  .draw-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .empty {
