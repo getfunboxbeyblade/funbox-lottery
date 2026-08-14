@@ -10,6 +10,15 @@ export const DRAW_CITIES = [
   "高雄市"
 ];
 
+export const DRAW_CITY_FILTERS = [
+  { id: "台北市", label: "台北市", cities: ["台北市"] },
+  { id: "新北市", label: "新北市", cities: ["新北市"] },
+  { id: "桃竹", label: "桃竹地區", cities: ["桃園市", "新竹市", "新竹縣"] },
+  { id: "台中市", label: "台中市", cities: ["台中市"] },
+  { id: "雲彰", label: "雲彰地區", cities: ["彰化縣", "雲林縣"] },
+  { id: "高雄市", label: "高雄市", cities: ["高雄市"] }
+];
+
 export const draws = [
   {
     "id": "draw-0",

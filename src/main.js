@@ -1,6 +1,6 @@
 import "./style.css";
 import { REGIONS, stores } from "./stores.js";
-import { DRAW_CITIES, draws } from "./draws.js";
+import { DRAW_CITY_FILTERS, draws } from "./draws.js";
 
 const listEl = document.getElementById("store-list");
 const empty = document.getElementById("empty");
@@ -91,10 +91,10 @@ function renderFilters() {
   if (state.page === "draws") {
     const chips = [
       { id: "all", label: "全部", count: draws.length },
-      ...DRAW_CITIES.map((city) => ({
-        id: city,
-        label: city,
-        count: draws.filter((store) => store.city === city).length,
+      ...DRAW_CITY_FILTERS.map((filter) => ({
+        id: filter.id,
+        label: filter.label,
+        count: draws.filter((store) => filter.cities.includes(store.city)).length,
       })),
     ];
     filtersEl.innerHTML = chips
@@ -225,12 +225,18 @@ function renderPageNav() {
   `;
 }
 
+function citiesForFilter(id) {
+  if (id === "all") return null;
+  return DRAW_CITY_FILTERS.find((filter) => filter.id === id)?.cities ?? [id];
+}
+
 function filteredDraws() {
   const query = state.query.trim().toLowerCase();
   let list = draws.slice();
+  const cities = citiesForFilter(state.city);
 
-  if (state.city !== "all") {
-    list = list.filter((store) => store.city === state.city);
+  if (cities) {
+    list = list.filter((store) => cities.includes(store.city));
   }
 
   if (query) {
@@ -271,10 +277,14 @@ function drawCardHtml(store) {
 
   return `
     <article class="draw-card">
-      <h3 class="store-name">${store.name}</h3>
-      <p class="draw-meta">${store.city} · 開始 ${store.startTime}</p>
-      ${notes}
-      <div class="draw-items">${items}</div>
+      <header class="draw-card-head">
+        <h3 class="store-name">${store.name}</h3>
+      </header>
+      <div class="draw-card-body">
+        <p class="draw-meta">${store.city} · 開始 ${store.startTime}</p>
+        ${notes}
+        <div class="draw-items">${items}</div>
+      </div>
     </article>
   `;
 }
