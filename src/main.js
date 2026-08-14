@@ -243,6 +243,18 @@ function filteredDraws() {
   return list;
 }
 
+function shouldOpenLineInSameTab() {
+  const ua = navigator.userAgent;
+  if (/iPhone|iPod|Android/i.test(ua)) return true;
+  if (/iPad/i.test(ua)) return true;
+  return navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
+}
+
+function drawLinkTargetAttrs() {
+  if (shouldOpenLineInSameTab()) return "";
+  return ` target="_blank" rel="noopener noreferrer"`;
+}
+
 function drawCardHtml(store) {
   const notes = store.notes.map((note) => `<p class="draw-note">${note}</p>`).join("");
   const items = store.items
@@ -251,7 +263,7 @@ function drawCardHtml(store) {
       return `
         <div class="draw-item">
           <span class="draw-product">${item.product}</span>
-          <a class="action-btn line-btn draw-btn${visited}" href="${item.url}" target="_blank" rel="noopener noreferrer" data-draw-url="${item.url}">抽獎</a>
+          <a class="action-btn line-btn draw-btn${visited}" href="${item.url}"${drawLinkTargetAttrs()} data-draw-url="${item.url}">抽獎</a>
         </div>
       `;
     })
