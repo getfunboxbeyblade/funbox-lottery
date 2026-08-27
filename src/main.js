@@ -9,7 +9,11 @@ const searchInput = document.getElementById("search");
 const locateBtn = document.getElementById("locate-btn");
 const filtersEl = document.getElementById("region-filters");
 const pageNav = document.getElementById("page-nav");
+const backTopBtn = document.getElementById("back-top");
+const listActionsEl = document.getElementById("draw-list-actions");
+const incompleteToggle = document.getElementById("incomplete-toggle");
 const VISITED_KEY = "visited_draw_urls";
+const COLLAPSED_KEY = "collapsed_draw_ids";
 
 function pageFromHash() {
   return location.hash === "#stores" ? "stores" : "draws";
@@ -20,10 +24,12 @@ const state = {
   region: "all",
   city: "all",
   query: "",
+  onlyIncomplete: false,
   userLocation: null,
   nearestId: null,
   geoError: "",
   visited: new Set(JSON.parse(localStorage.getItem(VISITED_KEY) || "[]")),
+  collapsed: new Set(JSON.parse(localStorage.getItem(COLLAPSED_KEY) || "[]")),
 };
 
 function haversineKm(lat1, lng1, lat2, lng2) {
@@ -194,7 +200,13 @@ function groupedHtml(list, nearestId) {
 
 function renderStatus(list) {
   if (state.page === "draws") {
-    statusEl.textContent = `共 ${list.length} 家有陀螺抽選的門市 · ${list.reduce((n, store) => n + store.items.length, 0)} 個抽獎連結`;
+    const linkCount = list.reduce((n, store) => n + store.items.length, 0);
+    const remaining = list.reduce(
+      (n, store) => n + store.items.filter((item) => !state.visited.has(item.url)).length,
+      0
+    );
+    const mode = state.onlyIncomplete ? " · 只看未抽完" : "";
+    statusEl.textContent = `共 ${list.length} 家門市 · ${linkCount} 個連結 · 未抽 ${remaining}${mode}`;
     return;
   }
   if (state.geoError) {
@@ -212,6 +224,57 @@ function renderStatus(list) {
     return;
   }
   statusEl.textContent = `共 ${list.length} 家可加入 LINE 抽選的門市`;
+}
+
+function renderListActions(listLength) {
+  if (!listActionsEl) return;
+  const show = state.page === "draws" && (listLength > 0 || state.onlyIncomplete);
+  listActionsEl.hidden = !show;
+  incompleteToggle?.classList.toggle("is-active", state.onlyIncomplete);
+  if (incompleteToggle) {
+    incompleteToggle.setAttribute("aria-pressed", state.onlyIncomplete ? "true" : "false");
+  }
+}
+
+function setFoldAll(collapse) {
+  const list = filteredDraws();
+  for (const store of list) {
+    if (collapse) state.collapsed.add(store.id);
+    else state.collapsed.delete(store.id);
+  }
+  localStorage.setItem(COLLAPSED_KEY, JSON.stringify([...state.collapsed]));
+  render();
+}
+
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function highlightProduct(product, query) {
+  const safe = escapeHtml(product);
+  if (!query) return safe;
+  const lower = product.toLowerCase();
+  const idx = lower.indexOf(query);
+  if (idx < 0) return safe;
+  const end = idx + query.length;
+  return `${escapeHtml(product.slice(0, idx))}<mark class="draw-match">${escapeHtml(product.slice(idx, end))}</mark>${escapeHtml(product.slice(end))}`;
+}
+
+function storeIsComplete(store) {
+  return store.items.length > 0 && store.items.every((item) => state.visited.has(item.url));
+}
+
+function storeHasSearchHit(store, query) {
+  if (!query) return false;
+  if (store.name.toLowerCase().includes(query) || store.city.toLowerCase().includes(query)) {
+    return true;
+  }
+  return store.items.some((item) => item.product.toLowerCase().includes(query));
 }
 
 function renderPageNav() {
@@ -240,10 +303,11 @@ function filteredDraws() {
   }
 
   if (query) {
-    list = list.filter((store) => {
-      const haystack = `${store.name} ${store.city} ${store.items.map((item) => item.product).join(" ")}`.toLowerCase();
-      return haystack.includes(query);
-    });
+    list = list.filter((store) => storeHasSearchHit(store, query));
+  }
+
+  if (state.onlyIncomplete) {
+    list = list.filter((store) => !storeIsComplete(store));
   }
 
   return list;
@@ -262,28 +326,52 @@ function drawLinkTargetAttrs() {
 }
 
 function drawCardHtml(store) {
-  const notes = store.notes.map((note) => `<p class="draw-note">${note}</p>`).join("");
-  const items = store.items
+  const query = state.query.trim().toLowerCase();
+  const searchHit = storeHasSearchHit(store, query);
+  const notes = store.notes.map((note) => `<p class="draw-note">${escapeHtml(note)}</p>`).join("");
+  const orderedItems = query
+    ? [...store.items].sort((a, b) => {
+        const aHit = a.product.toLowerCase().includes(query) ? 0 : 1;
+        const bHit = b.product.toLowerCase().includes(query) ? 0 : 1;
+        return aHit - bHit;
+      })
+    : store.items;
+  const items = orderedItems
     .map((item) => {
-      const visited = state.visited.has(item.url) ? " is-visited" : "";
+      const visited = state.visited.has(item.url);
+      const visitedClass = visited ? " is-visited" : "";
+      const label = visited ? "已抽" : "抽獎";
       return `
-        <div class="draw-item">
-          <span class="draw-product">${item.product}</span>
-          <a class="action-btn line-btn draw-btn${visited}" href="${item.url}"${drawLinkTargetAttrs()} data-draw-url="${item.url}">抽獎</a>
-        </div>
+        <a class="draw-btn${visitedClass}" href="${item.url}"${drawLinkTargetAttrs()} data-draw-url="${item.url}">
+          <span class="draw-product">${highlightProduct(item.product, query)}</span>
+          <span class="draw-btn-label">${label}</span>
+        </a>
       `;
     })
     .join("");
+  const collapsed = state.collapsed.has(store.id) && !searchHit;
+  const visitedCount = store.items.filter((item) => state.visited.has(item.url)).length;
+  const doneMark = storeIsComplete(store) ? " · 已完成" : "";
+  const matchCount = query
+    ? store.items.filter((item) => item.product.toLowerCase().includes(query)).length
+    : 0;
+  const matchMark = matchCount ? ` · 符合 ${matchCount}` : "";
 
   return `
-    <article class="draw-card">
-      <header class="draw-card-head">
-        <h3 class="store-name">${store.name}</h3>
-      </header>
-      <div class="draw-card-body">
-        <p class="draw-meta">${store.city} · 開始 ${store.startTime}</p>
-        ${notes}
-        <div class="draw-items">${items}</div>
+    <article class="draw-card${collapsed ? " is-collapsed" : ""}" data-draw-id="${store.id}">
+      <button type="button" class="draw-card-head" data-draw-toggle="${store.id}" aria-expanded="${collapsed ? "false" : "true"}">
+        <span class="draw-card-title">
+          <span class="store-name">${escapeHtml(store.name)}</span>
+          <span class="draw-card-summary">已抽 ${visitedCount}/${store.items.length}${doneMark}${matchMark}</span>
+        </span>
+        <span class="draw-chevron" aria-hidden="true"></span>
+      </button>
+      <div class="draw-card-body-wrap">
+        <div class="draw-card-body">
+          <p class="draw-meta">${escapeHtml(store.city)} · 抽選時間 ${escapeHtml(store.startTime)}</p>
+          ${notes}
+          <div class="draw-items">${items}</div>
+        </div>
       </div>
     </article>
   `;
@@ -318,6 +406,7 @@ function setPage(page) {
   state.page = page;
   state.query = "";
   searchInput.value = "";
+  if (page !== "draws") state.onlyIncomplete = false;
   const hash = page === "stores" ? "#stores" : "#draws";
   if (location.hash !== hash) {
     history.replaceState(null, "", hash);
@@ -336,7 +425,9 @@ function render() {
 
   if (state.page === "draws") {
     const list = filteredDraws();
-    empty.textContent = "沒有符合的抽選門市，試試其他關鍵字或切換縣市。";
+    empty.textContent = state.onlyIncomplete
+      ? "目前篩選下沒有未抽完的門市，試試關閉「只看未抽完」或換地區。"
+      : "沒有符合的抽選門市，試試其他關鍵字或切換縣市。";
     if (!list.length) {
       listEl.innerHTML = "";
       empty.hidden = false;
@@ -345,6 +436,7 @@ function render() {
       listEl.innerHTML = groupedDrawHtml(list);
     }
     renderStatus(list);
+    renderListActions(list.length);
     return;
   }
 
@@ -361,6 +453,7 @@ function render() {
   }
 
   renderStatus(list);
+  renderListActions(0);
 }
 
 pageNav.addEventListener("click", (event) => {
@@ -382,14 +475,65 @@ filtersEl.addEventListener("click", (event) => {
   render();
 });
 
+listActionsEl?.addEventListener("click", (event) => {
+  const incompleteBtn = event.target.closest("[data-incomplete-toggle]");
+  if (incompleteBtn) {
+    state.onlyIncomplete = !state.onlyIncomplete;
+    render();
+    return;
+  }
+  const button = event.target.closest("[data-fold]");
+  if (!button) return;
+  setFoldAll(button.dataset.fold === "collapse");
+});
+
 listEl.addEventListener("click", (event) => {
+  const toggle = event.target.closest("[data-draw-toggle]");
+  if (toggle) {
+    const id = toggle.dataset.drawToggle;
+    const card = toggle.closest(".draw-card");
+    if (!card) return;
+    const willCollapse = !card.classList.contains("is-collapsed");
+    card.classList.toggle("is-collapsed", willCollapse);
+    toggle.setAttribute("aria-expanded", willCollapse ? "false" : "true");
+    if (willCollapse) state.collapsed.add(id);
+    else state.collapsed.delete(id);
+    localStorage.setItem(COLLAPSED_KEY, JSON.stringify([...state.collapsed]));
+    return;
+  }
+
   const link = event.target.closest("[data-draw-url]");
   if (!link) return;
   const url = link.dataset.drawUrl;
   state.visited.add(url);
   localStorage.setItem(VISITED_KEY, JSON.stringify([...state.visited]));
   link.classList.add("is-visited");
+  const label = link.querySelector(".draw-btn-label");
+  if (label) label.textContent = "已抽";
+
+  const card = link.closest(".draw-card");
+  const summary = card?.querySelector(".draw-card-summary");
+  if (card && summary) {
+    const total = card.querySelectorAll("[data-draw-url]").length;
+    const done = card.querySelectorAll("[data-draw-url].is-visited").length;
+    summary.textContent = `已抽 ${done}/${total}${done === total ? " · 已完成" : ""}`;
+    if (state.onlyIncomplete && done === total) {
+      render();
+    }
+  }
 });
+
+function updateBackTop() {
+  if (!backTopBtn) return;
+  backTopBtn.classList.toggle("is-visible", window.scrollY > 420);
+}
+
+backTopBtn?.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+window.addEventListener("scroll", updateBackTop, { passive: true });
+updateBackTop();
 
 searchInput.addEventListener("input", (event) => {
   state.query = event.target.value;

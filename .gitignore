@@ -3,7 +3,12 @@ dist
 .DS_Store
 *.local
 tmp-funbox-line.html
+tmp-sheet.csv
+tmp-sheet.html
 parse-draws.mjs
+compare-draws.mjs
+merge-draws.mjs
 parsed-draws.json
+parsed-ref-draws.json
 src/draws-data.json
 
