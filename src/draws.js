@@ -307,7 +307,7 @@ export const draws = [
   },
   {
     "id": "draw-23",
-    "name": "Funbox-信義A8店(陀螺販售)",
+    "name": "Funbox-信義A8店",
     "city": "台北市",
     "region": "north",
     "startTime": "2026/08/28~2026/08/29",
