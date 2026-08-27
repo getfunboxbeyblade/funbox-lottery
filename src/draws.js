@@ -109,7 +109,7 @@ export const DRAW_CITY_FILTERS = [
 export const draws = [
   {
     "id": "draw-4",
-    "name": "來玩聚-北車地下街",
+    "name": "來玩聚 - 北車地下街",
     "city": "台北市",
     "region": "north",
     "startTime": "2026/08/28~2026/08/29",
@@ -175,7 +175,7 @@ export const draws = [
   },
   {
     "id": "draw-0",
-    "name": "Fun box忠孝SOGO",
+    "name": "Funbox - 忠孝SOGO",
     "city": "台北市",
     "region": "north",
     "startTime": "2026/08/28~2026/08/29",
@@ -225,7 +225,7 @@ export const draws = [
   },
   {
     "id": "draw-2",
-    "name": "Funbox Toys-大葉高島屋",
+    "name": "Funbox - 大葉高島屋",
     "city": "台北市",
     "region": "north",
     "startTime": "2026/08/28~2026/08/29",
@@ -307,7 +307,7 @@ export const draws = [
   },
   {
     "id": "draw-23",
-    "name": "Funbox-信義A8店",
+    "name": "Funbox - 信義A8店",
     "city": "台北市",
     "region": "north",
     "startTime": "2026/08/28~2026/08/29",
@@ -357,7 +357,7 @@ export const draws = [
   },
   {
     "id": "draw-3",
-    "name": "Funbox-南港潤泰",
+    "name": "Funbox - 南港潤泰",
     "city": "台北市",
     "region": "north",
     "startTime": "2026/08/28~2026/08/29",
@@ -442,34 +442,8 @@ export const draws = [
     ]
   },
   {
-    "id": "draw-22",
-    "name": "funbox大魯閣新光",
-    "city": "台北市",
-    "region": "north",
-    "startTime": "2026/08/28~2026/08/29",
-    "notes": [],
-    "items": [
-      {
-        "product": "BX-10 極限衝擊戰鬥盤 售價850元",
-        "url": "https://lin.ee/PoOO5Wd"
-      },
-      {
-        "product": "BX-25 戰鬥陀螺X專業手納包 售價850元",
-        "url": "https://lin.ee/rbKefO7"
-      },
-      {
-        "product": "BX-51 炫風發射器黑綠 售價250元",
-        "url": "https://lin.ee/XxiuZV7"
-      },
-      {
-        "product": "BX-57 3V3對戰收納盒 售價250元",
-        "url": "https://lin.ee/PFcrETG"
-      }
-    ]
-  },
-  {
     "id": "draw-1",
-    "name": "Funbox天母三越店",
+    "name": "Funbox - 天母三越店",
     "city": "台北市",
     "region": "north",
     "startTime": "2026/08/28~2026/08/29",
@@ -546,8 +520,122 @@ export const draws = [
     ]
   },
   {
+    "id": "draw-40",
+    "name": "Funbox - 三越站前",
+    "city": "台北市",
+    "region": "north",
+    "startTime": "2026/08/28 11:00~2026/08/29 21:00",
+    "notes": [],
+    "items": [
+      {
+        "product": "BX-57 3V3對戰收納盒 黑",
+        "url": "https://lin.ee/XPI38YQE"
+      },
+      {
+        "product": "BX-25 戰鬥陀螺X專業收納包",
+        "url": "https://lin.ee/xxBXwm8"
+      },
+      {
+        "product": "BX-51 旋風發射器 黑綠",
+        "url": "https://lin.ee/VsLOyOe"
+      }
+    ]
+  },
+  {
+    "id": "draw-41",
+    "name": "Funbox - 天母SOGO",
+    "city": "台北市",
+    "region": "north",
+    "startTime": "2026/08/28~2026/08/29",
+    "notes": [],
+    "items": [
+      {
+        "product": "BX-10 極限衝擊戰鬥盤",
+        "url": "https://lin.ee/QKy5qn7"
+      },
+      {
+        "product": "BX-25 戰鬥陀螺X專業收納包",
+        "url": "https://lin.ee/PzRjMLL"
+      },
+      {
+        "product": "BX-40 發射器（酒紅）",
+        "url": "https://lin.ee/roNvWF1"
+      },
+      {
+        "product": "BX-45 武士魂斬",
+        "url": "https://lin.ee/vBSvCHb"
+      },
+      {
+        "product": "BX-51 旋風發射器 黑綠",
+        "url": "https://lin.ee/vRy7Kmb"
+      },
+      {
+        "product": "BX-57 3V3對戰收納盒（黑）",
+        "url": "https://lin.ee/WrnejoZ"
+      },
+      {
+        "product": "UX-02 惡魔戰鎚",
+        "url": "https://lin.ee/pbZhX9A"
+      },
+      {
+        "product": "UX-19 子彈獅鷲H",
+        "url": "https://lin.ee/5JE24Ce"
+      }
+    ]
+  },
+  {
+    "id": "draw-43",
+    "name": "Funbox - 遠百信義A13",
+    "city": "台北市",
+    "region": "north",
+    "startTime": "2026/08/28~2026/08/29",
+    "notes": [],
+    "items": [
+      {
+        "product": "BX-25 戰鬥陀螺X專業收納包",
+        "url": "https://lin.ee/rmqmcJK"
+      },
+      {
+        "product": "BX-57 3V3對戰收納盒 黑",
+        "url": "https://lin.ee/OTcb95I"
+      },
+      {
+        "product": "BX-18 旋風發射器",
+        "url": "https://lin.ee/p1ae3r1"
+      },
+      {
+        "product": "BX-40 發射器(酒紅)",
+        "url": "https://lin.ee/qrLVL4d"
+      },
+      {
+        "product": "BX-51 旋風發射器 黑綠",
+        "url": "https://lin.ee/qO377rA"
+      },
+      {
+        "product": "CX-18 腕龍鞭打 隨機強化組",
+        "url": "https://lin.ee/6JxC0z7"
+      },
+      {
+        "product": "BX-45 武士魂斬",
+        "url": "https://lin.ee/sIwKwXDU"
+      },
+      {
+        "product": "UX-19 子彈獅鷲H",
+        "url": "https://lin.ee/xbiVtHb"
+      },
+      {
+        "product": "BX-10 極限衝擊戰鬥盤",
+        "url": "https://lin.ee/TiVMoAc"
+      },
+      {
+        "product": "BX-37 雙重極限衝擊戰鬥盤 豪華組",
+        "url": "https://lin.ee/TZt71nw"
+      }
+    ]
+  },
+  {
     "id": "draw-6",
-    "name": "Funbox -中和環球店",
+    "name": "Funbox - 中和環球店",
     "city": "新北市",
     "region": "north",
     "startTime": "2026/08/28~2026/08/29",
@@ -593,7 +681,7 @@ export const draws = [
   },
   {
     "id": "draw-5",
-    "name": "FunBox Toys-汐止遠雄店",
+    "name": "Funbox - 汐止遠雄店",
     "city": "新北市",
     "region": "north",
     "startTime": "2026/08/28 11:00~2026/08/29 22:00",
@@ -667,7 +755,7 @@ export const draws = [
   },
   {
     "id": "draw-21",
-    "name": "Funbox板橋遠東店",
+    "name": "Funbox - 板橋遠東店",
     "city": "新北市",
     "region": "north",
     "startTime": "2026/08/28 11:00~2026/08/29 21:00",
@@ -740,12 +828,108 @@ export const draws = [
     ]
   },
   {
-    "id": "draw-7",
-    "name": "Funbox新店誠品店",
+    "id": "draw-42",
+    "name": "Funbox - 板橋大遠百",
     "city": "新北市",
     "region": "north",
     "startTime": "2026/08/28~2026/08/29",
     "notes": [],
+    "items": [
+      {
+        "product": "BX-00 暴風天馬3-70RA",
+        "url": "https://lin.ee/xheASvX"
+      },
+      {
+        "product": "BX-10 極限衝擊戰鬥盤",
+        "url": "https://lin.ee/seyqhlS"
+      },
+      {
+        "product": "BX-18 X旋風發射器",
+        "url": "https://lin.ee/UwnH92e"
+      },
+      {
+        "product": "BX-26 獨角刺心",
+        "url": "https://lin.ee/pkDSIq5"
+      },
+      {
+        "product": "BX-32 寬型極限衝擊戰鬥盤",
+        "url": "https://lin.ee/R6VQbEl"
+      },
+      {
+        "product": "BX-33 皓戰猛虎",
+        "url": "https://lin.ee/rNAmAgV"
+      },
+      {
+        "product": "BX-40 發射器(酒紅)",
+        "url": "https://lin.ee/Y3gWQVr"
+      },
+      {
+        "product": "BX-50 天堂日輪 隨機強化組",
+        "url": "https://lin.ee/sSNr3M8"
+      },
+      {
+        "product": "BX-51 旋風發射器 黑綠",
+        "url": "https://lin.ee/z7kLKuv6"
+      },
+      {
+        "product": "BXG-01 烈焰飛鳳S",
+        "url": "https://lin.ee/TsnvZ4M"
+      },
+      {
+        "product": "BXG-04 銀牙烈虎S",
+        "url": "https://lin.ee/qcpfI4D"
+      },
+      {
+        "product": "CX-18 腕龍鞭打 隨機強化組",
+        "url": "https://lin.ee/5mYI87f"
+      },
+      {
+        "product": "UX-01 蒼龍爆刃",
+        "url": "https://lin.ee/nno3V7j"
+      },
+      {
+        "product": "UX-02 惡魔戰錘",
+        "url": "https://lin.ee/XjabcZaU"
+      },
+      {
+        "product": "UX-11 衝擊龍神 豪華組",
+        "url": "https://lin.ee/PtcBTDnb"
+      },
+      {
+        "product": "UX-19 子彈獅鷲H",
+        "url": "https://lin.ee/nhavyh4"
+      },
+      {
+        "product": "UX-20 榮耀武神LF",
+        "url": "https://lin.ee/8PXerlh"
+      },
+      {
+        "product": "BX-57 3V3對戰收納盒 黑",
+        "url": "https://lin.ee/s8ZDxf1"
+      },
+      {
+        "product": "BX-25 戰鬥陀螺X專業收納包",
+        "url": "https://lin.ee/p1SwEvf"
+      },
+      {
+        "product": "BX-45 武士魂斬",
+        "url": "https://lin.ee/6pTWBQKN"
+      },
+      {
+        "product": "BX-37 雙重極限衝擊戰鬥盤 豪華組",
+        "url": "https://lin.ee/qTLQJZR"
+      }
+    ]
+  },
+  {
+    "id": "draw-7",
+    "name": "Funbox - 新店誠品-裕隆城",
+    "city": "新北市",
+    "region": "north",
+    "startTime": "2026/08/28~2026/08/29",
+    "notes": [
+      "新店誠品與裕隆城為同一間門市"
+    ],
     "items": [
       {
         "product": "BX-10 極限衝擊戰鬥盤",
@@ -787,7 +971,7 @@ export const draws = [
   },
   {
     "id": "draw-8",
-    "name": "Funbox樹林秀泰店",
+    "name": "Funbox - 樹林秀泰店",
     "city": "新北市",
     "region": "north",
     "startTime": "2026/08/28 11:00~2026/08/29 21:00",
@@ -845,7 +1029,7 @@ export const draws = [
   },
   {
     "id": "draw-9",
-    "name": "Funbox-桃園站前三越",
+    "name": "Funbox - 桃園站前三越",
     "city": "桃園市",
     "region": "tyhcm",
     "startTime": "2026/08/28~2026/08/29",
@@ -879,7 +1063,7 @@ export const draws = [
   },
   {
     "id": "draw-10",
-    "name": "Funbox-新竹遠東店",
+    "name": "Funbox - 新竹遠東店",
     "city": "新竹市",
     "region": "tyhcm",
     "startTime": "2026/08/28~2026/08/29",
@@ -921,7 +1105,7 @@ export const draws = [
   },
   {
     "id": "draw-11",
-    "name": "Funbox-新竹遠雄店",
+    "name": "Funbox - 新竹遠雄店",
     "city": "新竹市",
     "region": "tyhcm",
     "startTime": "2026/08/28~2026/08/29",
@@ -959,7 +1143,7 @@ export const draws = [
   },
   {
     "id": "draw-24",
-    "name": "Funbox 竹北遠東店",
+    "name": "Funbox - 竹北遠東店",
     "city": "新竹縣",
     "region": "tyhcm",
     "startTime": "2026/08/28~2026/08/29",
@@ -1033,7 +1217,7 @@ export const draws = [
   },
   {
     "id": "draw-25",
-    "name": "Funbox 台中中友店",
+    "name": "Funbox - 台中中友店",
     "city": "台中市",
     "region": "central",
     "startTime": "2026/08/28~2026/08/29",
@@ -1103,7 +1287,7 @@ export const draws = [
   },
   {
     "id": "draw-12",
-    "name": "Funbox 台中港三井",
+    "name": "Funbox - 台中港三井",
     "city": "台中市",
     "region": "central",
     "startTime": "2026/08/28 11:00~2026/08/29 20:30",
@@ -1147,7 +1331,7 @@ export const draws = [
   },
   {
     "id": "draw-26",
-    "name": "FUNBOX 台中遠百店",
+    "name": "Funbox - 台中遠百店",
     "city": "台中市",
     "region": "central",
     "startTime": "2026/08/28~2026/08/29",
@@ -1229,7 +1413,7 @@ export const draws = [
   },
   {
     "id": "draw-27",
-    "name": "Funbox 新光三越台中店",
+    "name": "Funbox - 新光三越台中店",
     "city": "台中市",
     "region": "central",
     "startTime": "2026/08/28~2026/08/29",
@@ -1315,7 +1499,7 @@ export const draws = [
   },
   {
     "id": "draw-20",
-    "name": "Funbox 廣三SOGO店",
+    "name": "Funbox - 廣三SOGO店",
     "city": "台中市",
     "region": "central",
     "startTime": "2026/08/28 11:00~2026/08/29 21:00",
@@ -1397,7 +1581,7 @@ export const draws = [
   },
   {
     "id": "draw-14",
-    "name": "Funbox 豐原太平洋店",
+    "name": "Funbox - 豐原太平洋店",
     "city": "台中市",
     "region": "central",
     "startTime": "2026/08/28~2026/08/29",
@@ -1431,7 +1615,7 @@ export const draws = [
   },
   {
     "id": "draw-13",
-    "name": "Funbox麗寶一期店",
+    "name": "Funbox - 麗寶一期店",
     "city": "台中市",
     "region": "central",
     "startTime": "2026/08/28 11:00~2026/08/29 21:00",
@@ -1469,7 +1653,7 @@ export const draws = [
   },
   {
     "id": "draw-29",
-    "name": "來玩聚-員林店",
+    "name": "來玩聚 - 員林店",
     "city": "彰化縣",
     "region": "central",
     "startTime": "2026/08/28~2026/08/29",
@@ -1511,7 +1695,7 @@ export const draws = [
   },
   {
     "id": "draw-28",
-    "name": "來玩聚-彰化店",
+    "name": "來玩聚 - 彰化店",
     "city": "彰化縣",
     "region": "central",
     "startTime": "2026/08/28~2026/08/29",
@@ -1581,7 +1765,7 @@ export const draws = [
   },
   {
     "id": "draw-30",
-    "name": "來玩聚斗六店",
+    "name": "來玩聚 - 斗六店",
     "city": "雲林縣",
     "region": "central",
     "startTime": "2026/08/28~2026/08/29",
@@ -1623,7 +1807,7 @@ export const draws = [
   },
   {
     "id": "draw-16",
-    "name": "Funbox 嘉義三越店",
+    "name": "Funbox - 嘉義三越店",
     "city": "嘉義市",
     "region": "south",
     "startTime": "2026/08/28~2026/08/29",
@@ -1653,7 +1837,7 @@ export const draws = [
   },
   {
     "id": "draw-15",
-    "name": "Funbox Toys-嘉義遠東店",
+    "name": "Funbox - 嘉義遠東店",
     "city": "嘉義市",
     "region": "south",
     "startTime": "2026/08/28~2026/08/29",
@@ -1699,57 +1883,139 @@ export const draws = [
   },
   {
     "id": "draw-31",
-    "name": "funbox-台南新天地",
+    "name": "Funbox - 台南西門-新天地",
     "city": "台南市",
     "region": "south",
     "startTime": "2026/08/28~2026/08/29",
-    "notes": [],
+    "notes": [
+      "台南西門與新天地為同一間門市"
+    ],
     "items": [
       {
-        "product": "BX-18 X旋風發射器＞",
-        "url": "https://lin.ee/zPxXYZo"
-      },
-      {
-        "product": "BX-26 獨角刺心＞",
-        "url": "https://lin.ee/sgSwGMh"
-      },
-      {
-        "product": "BX-33 皓戰猛虎＞",
-        "url": "https://lin.ee/q3VeTKK"
-      },
-      {
-        "product": "BX-51 旋風發射器 黑綠＞",
-        "url": "https://lin.ee/WOWijgj"
-      },
-      {
-        "product": "BX-57 3V3對戰收納盒 黑＞",
-        "url": "https://lin.ee/SL3z1FN"
-      },
-      {
-        "product": "UX-11 衝擊龍神 豪華組＞",
-        "url": "https://lin.ee/YvJAEm5s"
-      },
-      {
-        "product": "UX-19 子彈獅鷲H＞",
-        "url": "https://lin.ee/ngtZdnu"
-      },
-      {
-        "product": "CX-18 腕龍鞭打 隨機強化組＞",
-        "url": "https://lin.ee/5X4mH1e"
-      },
-      {
-        "product": "BXG-01 烈焰飛鳳S＞",
+        "product": "BXG-01 烈焰飛鳳S",
         "url": "https://lin.ee/rHpbeNA"
       },
       {
-        "product": "BXG-04 銀牙烈虎S＞",
+        "product": "BXG-04 銀牙烈虎S",
         "url": "https://lin.ee/wqyUGB7"
+      },
+      {
+        "product": "BX-18 X旋風發射器",
+        "url": "https://lin.ee/zPxXYZo"
+      },
+      {
+        "product": "BX-26 獨角刺心",
+        "url": "https://lin.ee/sgSwGMh"
+      },
+      {
+        "product": "BX-33 皓戰猛虎",
+        "url": "https://lin.ee/q3VeTKK"
+      },
+      {
+        "product": "BX-51 旋風發射器 黑綠",
+        "url": "https://lin.ee/WOWijgj"
+      },
+      {
+        "product": "BX-57 3V3對戰收納盒 黑",
+        "url": "https://lin.ee/SL3z1FN"
+      },
+      {
+        "product": "UX-11 衝擊龍神 豪華組",
+        "url": "https://lin.ee/WVbuaxc"
+      },
+      {
+        "product": "UX-19 子彈獅鷲H",
+        "url": "https://lin.ee/ngtZdnu"
+      },
+      {
+        "product": "CX-18 腕龍鞭打 隨機強化組",
+        "url": "https://lin.ee/5X4mH1e"
+      }
+    ]
+  },
+  {
+    "id": "draw-44",
+    "name": "Funbox - 南紡購物中心",
+    "city": "台南市",
+    "region": "south",
+    "startTime": "2026/08/28~2026/08/29",
+    "notes": [
+      "台南市東區中華東路一段366號A1館4樓"
+    ],
+    "items": [
+      {
+        "product": "BX-00 暴風天馬3-70RA $595",
+        "url": "https://lin.ee/6P88wlg"
+      },
+      {
+        "product": "BX-10 極限衝擊戰鬥盤 $850",
+        "url": "https://lin.ee/8K7fqBn"
+      },
+      {
+        "product": "BX-18 X旋風發射器 $250",
+        "url": "https://lin.ee/rQivEfl"
+      },
+      {
+        "product": "BX-25 戰鬥陀螺X專業收納包 $850",
+        "url": "https://lin.ee/NMSECJv"
+      },
+      {
+        "product": "BX-26 獨角刺心 $295",
+        "url": "https://lin.ee/te0zeQM"
+      },
+      {
+        "product": "BX-32 寬型極限衝擊戰鬥盤 $1250",
+        "url": "https://lin.ee/NQngBdu"
+      },
+      {
+        "product": "BX-33 皓戰猛虎 $295",
+        "url": "https://lin.ee/wjNb17d"
+      },
+      {
+        "product": "BX-37 雙重極限衝擊戰鬥盤 豪華組 $2750",
+        "url": "https://lin.ee/x03sqRv"
+      },
+      {
+        "product": "BX-40 發射器(酒紅) $250",
+        "url": "https://lin.ee/NE7Dwl7u"
+      },
+      {
+        "product": "BX-45 武士魂斬 $325",
+        "url": "https://lin.ee/5OBDlmX"
+      },
+      {
+        "product": "BX-51 旋風發射器 黑綠 $250",
+        "url": "https://lin.ee/UrgNP13"
+      },
+      {
+        "product": "BX-57 3V3對戰收納盒 黑 $250",
+        "url": "https://lin.ee/vHQ8iOD"
+      },
+      {
+        "product": "CX-18 腕龍鞭打 隨機強化組 $350",
+        "url": "https://lin.ee/oBvdgWL"
+      },
+      {
+        "product": "UX-02 惡魔戰錘 $395",
+        "url": "https://lin.ee/Zt7J2Pn"
+      },
+      {
+        "product": "UX-19 子彈獅鷲H $550",
+        "url": "https://lin.ee/pcVXTlD"
+      },
+      {
+        "product": "BXG-01 烈焰飛鳳S $350",
+        "url": "https://lin.ee/VhXG0yz"
+      },
+      {
+        "product": "BXG-04 銀牙烈虎S $350",
+        "url": "https://lin.ee/wEbR0Q7"
       }
     ]
   },
   {
     "id": "draw-35",
-    "name": "來玩聚-新楠店",
+    "name": "來玩聚 - 新楠店",
     "city": "高雄市",
     "region": "south",
     "startTime": "2026/08/28~2026/08/29",
@@ -1795,7 +2061,7 @@ export const draws = [
   },
   {
     "id": "draw-17",
-    "name": "來玩聚鳳山店",
+    "name": "來玩聚 - 鳳山店",
     "city": "高雄市",
     "region": "south",
     "startTime": "2026/08/28~2026/08/29",
@@ -1833,7 +2099,7 @@ export const draws = [
   },
   {
     "id": "draw-33",
-    "name": "Funbox -夢時代店",
+    "name": "Funbox - 夢時代店",
     "city": "高雄市",
     "region": "south",
     "startTime": "2026/08/28~2026/08/29",
@@ -1863,7 +2129,7 @@ export const draws = [
   },
   {
     "id": "draw-32",
-    "name": "Funbox 高雄大立店",
+    "name": "Funbox - 高雄大立店",
     "city": "高雄市",
     "region": "south",
     "startTime": "2026/08/28~2026/08/29",
@@ -1897,7 +2163,7 @@ export const draws = [
   },
   {
     "id": "draw-34",
-    "name": "Funbox-漢神巨蛋店",
+    "name": "Funbox - 漢神巨蛋店",
     "city": "高雄市",
     "region": "south",
     "startTime": "2026/08/28~2026/08/29",
@@ -1951,7 +2217,7 @@ export const draws = [
   },
   {
     "id": "draw-36",
-    "name": "Funbox高雄sogo店",
+    "name": "Funbox - 高雄SOGO店",
     "city": "高雄市",
     "region": "south",
     "startTime": "2026/08/28~2026/08/29",
@@ -1972,8 +2238,34 @@ export const draws = [
     ]
   },
   {
+    "id": "draw-22",
+    "name": "Funbox - 大魯閣新光",
+    "city": "高雄市",
+    "region": "south",
+    "startTime": "2026/08/28~2026/08/29",
+    "notes": [],
+    "items": [
+      {
+        "product": "BX-10 極限衝擊戰鬥盤 售價850元",
+        "url": "https://lin.ee/PoOO5Wd"
+      },
+      {
+        "product": "BX-25 戰鬥陀螺X專業手納包 售價850元",
+        "url": "https://lin.ee/rbKefO7"
+      },
+      {
+        "product": "BX-51 炫風發射器黑綠 售價250元",
+        "url": "https://lin.ee/XxiuZV7"
+      },
+      {
+        "product": "BX-57 3V3對戰收納盒 售價250元",
+        "url": "https://lin.ee/PFcrETG"
+      }
+    ]
+  },
+  {
     "id": "draw-37",
-    "name": "Funbox 屏東環球店",
+    "name": "Funbox - 屏東環球店",
     "city": "屏東縣",
     "region": "south",
     "startTime": "2026/08/28~2026/08/29",
@@ -1999,7 +2291,7 @@ export const draws = [
   },
   {
     "id": "draw-18",
-    "name": "funbox屏東太平洋",
+    "name": "Funbox - 屏東太平洋",
     "city": "屏東縣",
     "region": "south",
     "startTime": "2026/08/28~2026/08/29",
@@ -2033,7 +2325,7 @@ export const draws = [
   },
   {
     "id": "draw-38",
-    "name": "Funbox 宜蘭新月店",
+    "name": "Funbox - 新月廣場",
     "city": "宜蘭縣",
     "region": "east",
     "startTime": "2026/08/28~2026/08/29",
@@ -2127,7 +2419,7 @@ export const draws = [
   },
   {
     "id": "draw-19",
-    "name": "Funbox 台東秀泰店",
+    "name": "Funbox - 台東秀泰店",
     "city": "台東縣",
     "region": "east",
     "startTime": "2026/08/28~2026/08/29",
@@ -2177,7 +2469,7 @@ export const draws = [
   },
   {
     "id": "draw-39",
-    "name": "Funbox澎湖3號港店",
+    "name": "Funbox - 澎湖3號港店",
     "city": "澎湖縣",
     "region": "south",
     "startTime": "2026/08/28~2026/08/29",
