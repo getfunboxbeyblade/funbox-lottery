@@ -12,6 +12,7 @@ export const DRAW_CITIES = [
   "高雄市",
   "屏東縣",
   "宜蘭縣",
+  "花蓮縣",
   "台東縣",
   "澎湖縣"
 ];
@@ -88,6 +89,13 @@ export const DRAW_CITY_FILTERS = [
     "label": "宜蘭縣",
     "cities": [
       "宜蘭縣"
+    ]
+  },
+  {
+    "id": "花蓮縣",
+    "label": "花蓮縣",
+    "cities": [
+      "花蓮縣"
     ]
   },
   {
@@ -634,6 +642,80 @@ export const draws = [
     ]
   },
   {
+    "id": "draw-45",
+    "name": "Funbox - 美麗華",
+    "city": "台北市",
+    "region": "north",
+    "startTime": "2026/08/28~2026/08/29",
+    "notes": [],
+    "items": [
+      {
+        "product": "BX-10 極限衝擊戰鬥盤",
+        "url": "https://lin.ee/wq8Xh16"
+      },
+      {
+        "product": "BX-18 黑色旋風發射器",
+        "url": "https://lin.ee/UMF2FOh"
+      },
+      {
+        "product": "BX-25 戰鬥陀螺X專業收納包(黑)",
+        "url": "https://lin.ee/o6FCEYD"
+      },
+      {
+        "product": "BX-26 獨角刺心 5-60 GP",
+        "url": "https://lin.ee/VXF1Iub"
+      },
+      {
+        "product": "BX-33 皓戰白虎 3-60 U",
+        "url": "https://lin.ee/ULt1jCP"
+      },
+      {
+        "product": "BX-35 玄冥戰甲 抽抽包",
+        "url": "https://lin.ee/WZOYsDS"
+      },
+      {
+        "product": "BX-37 雙重極限衝擊戰鬥盤豪華組",
+        "url": "https://lin.ee/WEOWkxg"
+      },
+      {
+        "product": "BX-40 左迴旋拉條發射器L",
+        "url": "https://lin.ee/7QwGv71"
+      },
+      {
+        "product": "BX-45 武士魂斬6-70M",
+        "url": "https://lin.ee/SQmvkTm"
+      },
+      {
+        "product": "BX-51 黑×綠色旋風發射器",
+        "url": "https://lin.ee/NsXneVi"
+      },
+      {
+        "product": "BX-57 3V3對戰收納盒 黑",
+        "url": "https://lin.ee/oBrBdCY"
+      },
+      {
+        "product": "UX-11 衝擊龍神 9-60 LR",
+        "url": "https://lin.ee/WcqjWdy"
+      },
+      {
+        "product": "UX-19 子彈獅鷲 H",
+        "url": "https://lin.ee/uDrqsH5"
+      },
+      {
+        "product": "CX-18 腕龍鞭打 5-70 Nr",
+        "url": "https://lin.ee/wlBvX5F"
+      },
+      {
+        "product": "BXG-01 烈焰飛鳳S 3-80 T",
+        "url": "https://lin.ee/oRVQpRZ"
+      },
+      {
+        "product": "BXG-04 銀牙烈虎S 4-80 P",
+        "url": "https://lin.ee/tJBIH2W"
+      }
+    ]
+  },
+  {
     "id": "draw-6",
     "name": "Funbox - 中和環球店",
     "city": "新北市",
@@ -1058,6 +1140,68 @@ export const draws = [
       {
         "product": "BXG-04 銀牙烈虎S",
         "url": "https://lin.ee/W7a5GSM"
+      }
+    ]
+  },
+  {
+    "id": "draw-46",
+    "name": "Funbox - 桃園台茂店",
+    "city": "桃園市",
+    "region": "tyhcm",
+    "startTime": "2026/08/28 11:00~2026/08/29 21:30",
+    "notes": [],
+    "items": [
+      {
+        "product": "BX-10 極限衝擊戰鬥盤",
+        "url": "https://lin.ee/vgY7gpL"
+      },
+      {
+        "product": "BX-18 X旋風發射器",
+        "url": "https://lin.ee/Y93g5wt"
+      },
+      {
+        "product": "BX-25 戰鬥陀螺X專業收納包",
+        "url": "https://lin.ee/ZL83gdu"
+      },
+      {
+        "product": "BX-26 獨角刺心",
+        "url": "https://lin.ee/WidK7uJ"
+      },
+      {
+        "product": "BX-33 皓戰猛虎",
+        "url": "https://lin.ee/6QICHOc"
+      },
+      {
+        "product": "BX-37 雙重極限衝擊戰鬥盤 豪華組",
+        "url": "https://lin.ee/YuEcVlg"
+      },
+      {
+        "product": "BX-40 發射器(酒紅)",
+        "url": "https://lin.ee/P7rOuVh"
+      },
+      {
+        "product": "BX-45 武士魂斬",
+        "url": "https://lin.ee/5kLcUeK"
+      },
+      {
+        "product": "BX-51 旋風發射器 黑綠",
+        "url": "https://lin.ee/TTSoyC6"
+      },
+      {
+        "product": "BX-57 3V3對戰收納盒 黑",
+        "url": "https://lin.ee/oe1rROj"
+      },
+      {
+        "product": "UX-02 惡魔戰錘",
+        "url": "https://lin.ee/NXIZfwR"
+      },
+      {
+        "product": "BXG-01 烈焰飛鳳S",
+        "url": "https://lin.ee/ZL4MGnT"
+      },
+      {
+        "product": "BXG-04 銀牙烈虎S",
+        "url": "https://lin.ee/RFm6sJz"
       }
     ]
   },
@@ -1652,6 +1796,76 @@ export const draws = [
     ]
   },
   {
+    "id": "draw-47",
+    "name": "Funbox - 台中Lalaport",
+    "city": "台中市",
+    "region": "central",
+    "startTime": "2026/08/28~2026/08/29",
+    "notes": [],
+    "items": [
+      {
+        "product": "BX-00 暴風天馬3-70RA",
+        "url": "https://lin.ee/xbP7QB9"
+      },
+      {
+        "product": "BX-10 極限衝擊戰鬥盤",
+        "url": "https://lin.ee/obS4tF3"
+      },
+      {
+        "product": "BX-18 X旋風發射器",
+        "url": "https://lin.ee/X0df3S4"
+      },
+      {
+        "product": "BX-25 戰鬥陀螺X專業收納包",
+        "url": "https://lin.ee/n5ZBe5gQ"
+      },
+      {
+        "product": "BX-26 獨角刺心",
+        "url": "https://lin.ee/pvB0Zas"
+      },
+      {
+        "product": "BX-32 寬型極限衝擊戰鬥盤",
+        "url": "https://lin.ee/uw10pD2"
+      },
+      {
+        "product": "BX-33 皓戰猛虎",
+        "url": "https://lin.ee/TNl3ZG"
+      },
+      {
+        "product": "BX-40 發射器",
+        "url": "https://lin.ee/7NGpezL"
+      },
+      {
+        "product": "BX-45 武士魂斬",
+        "url": "https://lin.ee/unkvnsc"
+      },
+      {
+        "product": "BX-50 天堂日輪 隨機強化組",
+        "url": "https://lin.ee/VeUYbMY"
+      },
+      {
+        "product": "BX-57 3V3對戰收納盒 黑",
+        "url": "https://lin.ee/sDQaukT"
+      },
+      {
+        "product": "UX-02 惡魔戰錘",
+        "url": "https://lin.ee/oTNqYqz"
+      },
+      {
+        "product": "UX-20 榮耀武神LF",
+        "url": "https://lin.ee/zMWwj3Q"
+      },
+      {
+        "product": "BXG-01 烈焰飛鳳S",
+        "url": "https://lin.ee/NSFjbEB"
+      },
+      {
+        "product": "BXG-04 銀牙烈虎S",
+        "url": "https://lin.ee/omR87tZ"
+      }
+    ]
+  },
+  {
     "id": "draw-29",
     "name": "來玩聚 - 員林店",
     "city": "彰化縣",
@@ -2014,6 +2228,132 @@ export const draws = [
     ]
   },
   {
+    "id": "draw-48",
+    "name": "Funbox - 台南三井店",
+    "city": "台南市",
+    "region": "south",
+    "startTime": "2026/08/28 11:00~2026/08/29 20:30",
+    "notes": [],
+    "items": [
+      {
+        "product": "BX-10 極限衝擊戰鬥盤",
+        "url": "https://lin.ee/sUMrtwD"
+      },
+      {
+        "product": "BX-18 X旋風發射器",
+        "url": "https://lin.ee/s91f6im"
+      },
+      {
+        "product": "BX-26 獨角刺心戰鬥",
+        "url": "https://lin.ee/rsKjfva"
+      },
+      {
+        "product": "BX-35 隨機抽包",
+        "url": "https://lin.ee/7E0kktq"
+      },
+      {
+        "product": "BX-50 天堂日輪隨機抽包",
+        "url": "https://lin.ee/52gKflo"
+      },
+      {
+        "product": "BX-57 3V3 對戰收納盒 黑色",
+        "url": "https://lin.ee/5Z11gMU"
+      },
+      {
+        "product": "UX-19 子彈獅鷲",
+        "url": "https://lin.ee/7lVBHjH"
+      },
+      {
+        "product": "UX-20 榮耀武神",
+        "url": "https://lin.ee/t5Q7JZ4"
+      },
+      {
+        "product": "BXG-04 銀牙烈虎",
+        "url": "https://lin.ee/5o6OXHo"
+      }
+    ]
+  },
+  {
+    "id": "draw-49",
+    "name": "Funbox - 台南遠百店",
+    "city": "台南市",
+    "region": "south",
+    "startTime": "2026/08/28~2026/08/29",
+    "notes": [],
+    "items": [
+      {
+        "product": "BX-10 極限衝擊戰鬥盤",
+        "url": "https://lin.ee/yxsboHu4"
+      },
+      {
+        "product": "BX-25 戰鬥陀螺X專業收納包",
+        "url": "https://lin.ee/WmKxFLXY"
+      },
+      {
+        "product": "BX-57 3V3對戰收納盒 黑",
+        "url": "https://lin.ee/vIJCgVo"
+      }
+    ]
+  },
+  {
+    "id": "draw-50",
+    "name": "來玩聚 - 新仁店",
+    "city": "台南市",
+    "region": "south",
+    "startTime": "2026/08/28~2026/08/29",
+    "notes": [],
+    "items": [
+      {
+        "product": "BX-18 X旋風發射器",
+        "url": "https://lin.ee/v82CNi3"
+      },
+      {
+        "product": "BX-25 戰鬥陀螺X專業收納包",
+        "url": "https://lin.ee/yC63Sr6"
+      },
+      {
+        "product": "BX-26 獨角刺心",
+        "url": "https://lin.ee/VdUc9v7"
+      },
+      {
+        "product": "BX-33 皓戰猛虎",
+        "url": "https://lin.ee/nUSzjjt"
+      },
+      {
+        "product": "BX-40 發射器 酒紅",
+        "url": "https://lin.ee/ZHPJEdT"
+      },
+      {
+        "product": "BX-51 旋風發射器 黑綠",
+        "url": "https://lin.ee/8WWWrX7"
+      },
+      {
+        "product": "BX-57 3V3對戰收納盒 黑",
+        "url": "https://lin.ee/vyUawoJ"
+      },
+      {
+        "product": "UX-11 衝擊龍神 豪華組",
+        "url": "https://lin.ee/TJ7PQrW"
+      },
+      {
+        "product": "UX-19 子彈獅鷲",
+        "url": "https://lin.ee/vNh0fUU"
+      },
+      {
+        "product": "CX-18 腕龍鞭打 隨機強化組",
+        "url": "https://lin.ee/WwxYwIJ"
+      },
+      {
+        "product": "BXG-01 烈焰飛鳳S",
+        "url": "https://lin.ee/rfw6v7L"
+      },
+      {
+        "product": "BXG-04 銀牙獵虎S",
+        "url": "https://lin.ee/qW83n7a"
+      }
+    ]
+  },
+  {
     "id": "draw-35",
     "name": "來玩聚 - 新楠店",
     "city": "高雄市",
@@ -2264,6 +2604,128 @@ export const draws = [
     ]
   },
   {
+    "id": "draw-51",
+    "name": "Funbox - 高雄漢神",
+    "city": "高雄市",
+    "region": "south",
+    "startTime": "2026/08/28 11:00~2026/08/29 21:00",
+    "notes": [],
+    "items": [
+      {
+        "product": "BX-10 極限衝擊戰鬥盤",
+        "url": "https://lin.ee/V1zj0WQ"
+      },
+      {
+        "product": "BX-25 戰鬥陀螺X專業收納包",
+        "url": "https://lin.ee/z42P5zT"
+      },
+      {
+        "product": "BX-40 發射器（酒紅）",
+        "url": "https://lin.ee/6US88tT"
+      },
+      {
+        "product": "BX-51 旋風發射器 黑綠",
+        "url": "https://lin.ee/V5IUl3P"
+      },
+      {
+        "product": "BX-57 3V3對戰收納盒",
+        "url": "https://lin.ee/6Gyyz4xE"
+      },
+      {
+        "product": "UX-11 衝擊龍神 豪華組",
+        "url": "https://lin.ee/rh0zq82"
+      },
+      {
+        "product": "UX-19 子彈獅鷲H",
+        "url": "https://lin.ee/z5n3oDz"
+      }
+    ]
+  },
+  {
+    "id": "draw-52",
+    "name": "來玩聚 - 楠梓店",
+    "city": "高雄市",
+    "region": "south",
+    "startTime": "2026/08/28 10:00~2026/08/29 21:00",
+    "notes": [],
+    "items": [
+      {
+        "product": "BX-10 極限衝擊戰鬥盤",
+        "url": "https://lin.ee/zaMvKH5P"
+      },
+      {
+        "product": "BX-25 戰鬥陀螺X專業收納包",
+        "url": "https://lin.ee/n7wJHPf"
+      },
+      {
+        "product": "BX-40 發射器(酒紅)",
+        "url": "https://lin.ee/rA22gXs"
+      },
+      {
+        "product": "BX-51 旋風發射器 黑綠",
+        "url": "https://lin.ee/t0mX19D"
+      },
+      {
+        "product": "BX-57 3V3對戰收納盒 黑",
+        "url": "https://lin.ee/w8dXvxe"
+      },
+      {
+        "product": "UX-02 惡魔戰錘",
+        "url": "https://lin.ee/Uo0LIS0"
+      },
+      {
+        "product": "CX-18 腕龍鞭打 隨機強化組",
+        "url": "https://lin.ee/9hQDNOH"
+      }
+    ]
+  },
+  {
+    "id": "draw-53",
+    "name": "Funbox - 義大二館",
+    "city": "高雄市",
+    "region": "south",
+    "startTime": "2026/08/28 10:30~2026/08/29 21:00",
+    "notes": [],
+    "items": [
+      {
+        "product": "BX-10 極限衝擊戰鬥組",
+        "url": "https://lin.ee/VDkvXe8"
+      },
+      {
+        "product": "BX-25 戰鬥陀螺X專業收納包",
+        "url": "https://lin.ee/xmqs6s81"
+      },
+      {
+        "product": "BX-40 發射器",
+        "url": "https://lin.ee/TEpz5Ht"
+      },
+      {
+        "product": "BX-45 武士魂斬",
+        "url": "https://lin.ee/qMlelu4"
+      },
+      {
+        "product": "BX-51 旋風發射器",
+        "url": "https://lin.ee/Xe7KE2x5"
+      },
+      {
+        "product": "BX-57 3V3 對戰收納盒",
+        "url": "https://lin.ee/6JJJ9Kv"
+      },
+      {
+        "product": "UX-02 惡魔戰錘",
+        "url": "https://lin.ee/8HsN6Cp"
+      },
+      {
+        "product": "UX-11 衝擊龍神豪華組",
+        "url": "https://lin.ee/Tne7NHQ"
+      },
+      {
+        "product": "CX-18 腕龍鞭打 隨機強化組",
+        "url": "https://lin.ee/xFOkeAW"
+      }
+    ]
+  },
+  {
     "id": "draw-37",
     "name": "Funbox - 屏東環球店",
     "city": "屏東縣",
@@ -2418,6 +2880,52 @@ export const draws = [
     ]
   },
   {
+    "id": "draw-54",
+    "name": "Funbox - 花蓮遠東",
+    "city": "花蓮縣",
+    "region": "east",
+    "startTime": "2026/08/28~2026/08/29",
+    "notes": [],
+    "items": [
+      {
+        "product": "BX-10 極限衝擊戰鬥盤",
+        "url": "https://liff.line.me/1654883387-DxN9w07M/c/01M10YNVW9MRH81XW6EET2BES1?q=timeline_post"
+      },
+      {
+        "product": "BX-25 專業收納包",
+        "url": "https://liff.line.me/1654883387-DxN9w07M/c/01M10YDS10DSSBRCE2S8WFEAKB?q=timeline_post"
+      },
+      {
+        "product": "BX-26 獨角刺心",
+        "url": "https://liff.line.me/1654883387-DxN9w07M/c/01M11090WHK9DR8QDR9SZYKFE3?q=timeline_post"
+      },
+      {
+        "product": "BX-40 發射器（酒紅）",
+        "url": "https://liff.line.me/1654883387-DxN9w07M/c/01M110HGWGRJN4APY8B565RSQQ?q=timeline_post"
+      },
+      {
+        "product": "BX-45 武士魂斬",
+        "url": "https://liff.line.me/1654883387-DxN9nACRMJJ03M6531Q4C3GEF?q=timeline_post"
+      },
+      {
+        "product": "BX-57 對戰收納盒黑",
+        "url": "https://liff.line.me/1654883387-DxN9w07M/c/01M10Y56SV0W8H2P1Q4MTNSX59?q=timeline_post"
+      },
+      {
+        "product": "BXG-01 烈焰飛鳳",
+        "url": "https://liff.line.me/1654883387-DxN9w07M/c/01M110RC9989TR5X3XBA55KNCH?q=timeline_post"
+      },
+      {
+        "product": "BXG-04 銀牙烈虎",
+        "url": "https://liff.line.me/1654883387-DxN9w07M/c/01M110NBVMERP582E8G538PG65?q=timeline_post"
+      },
+      {
+        "product": "BBG-31 鋼鐵奇兵紀念組$1499",
+        "url": "https://liff.line.me/1654883387-DxN9w07M/c/01M110583SHRKET8T5BTVZ97N6?q=timeline_post"
+      }
+    ]
+  },
+  {
     "id": "draw-19",
     "name": "Funbox - 台東秀泰店",
     "city": "台東縣",
@@ -2464,6 +2972,48 @@ export const draws = [
       {
         "product": "BXG-01 烈焰飛鳳",
         "url": "https://lin.ee/WuDoM99"
+      }
+    ]
+  },
+  {
+    "id": "draw-55",
+    "name": "來玩聚 - 台東家樂福",
+    "city": "台東縣",
+    "region": "east",
+    "startTime": "2026/08/28 11:00~2026/08/29 20:00",
+    "notes": [],
+    "items": [
+      {
+        "product": "BX-10 極限衝擊戰鬥盤",
+        "url": "https://lin.ee/w1pD392"
+      },
+      {
+        "product": "BX-25 戰鬥陀螺X專業收納包",
+        "url": "https://lin.ee/ODTsMNA"
+      },
+      {
+        "product": "BX-51 旋風發射器 黑綠",
+        "url": "https://lin.ee/Wi5ZrTF"
+      },
+      {
+        "product": "BX-57 3V3對戰收納盒 黑",
+        "url": "https://lin.ee/ThhENv7"
+      },
+      {
+        "product": "UX-02 惡魔戰錘",
+        "url": "https://lin.ee/WJUNDW4"
+      },
+      {
+        "product": "UX-11 衝擊龍神 豪華組",
+        "url": "https://lin.ee/wOdTpAT"
+      },
+      {
+        "product": "UX-19 子彈獅鷲H",
+        "url": "https://lin.ee/yxdUTSH"
+      },
+      {
+        "product": "CX-18 腕龍鞭打 隨機強化組",
+        "url": "https://lin.ee/UVirdCY"
       }
     ]
   },
