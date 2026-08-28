@@ -3,7 +3,7 @@ import { REGIONS, stores } from "./stores.js";
 import { DRAW_CITY_FILTERS, draws } from "./draws.js";
 
 const SITE_AUTHOR = "Frank CHU";
-const SITE_UPDATED_AT = "2026-08-28T11:32:00+08:00";
+const SITE_UPDATED_AT = "2026-08-28T11:52:00+08:00";
 
 const listEl = document.getElementById("store-list");
 const empty = document.getElementById("empty");
