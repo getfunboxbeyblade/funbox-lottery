@@ -932,10 +932,21 @@ body.is-draws .toolbar {
   box-sizing: border-box;
   width: 100%;
   max-width: var(--max);
-  margin: 0 auto;
-  padding: 28px var(--page-pad-r) 40px var(--page-pad);
+  margin: 28px auto 0;
+  padding: 20px var(--page-pad-r) 48px var(--page-pad);
+  border-top: 1px solid var(--card-border);
   color: var(--muted);
   font-size: 12px;
+  line-height: 1.6;
+}
+
+.footer-credit,
+.footer-updated {
+  margin: 0;
+}
+
+.footer-updated time {
+  font-variant-numeric: tabular-nums;
 }
 
 .back-top {

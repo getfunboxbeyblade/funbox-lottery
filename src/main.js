@@ -2,6 +2,9 @@ import "./style.css";
 import { REGIONS, stores } from "./stores.js";
 import { DRAW_CITY_FILTERS, draws } from "./draws.js";
 
+const SITE_AUTHOR = "Frank CHU";
+const SITE_UPDATED_AT = "2026-08-28T11:32:00+08:00";
+
 const listEl = document.getElementById("store-list");
 const empty = document.getElementById("empty");
 const statusEl = document.getElementById("status");
@@ -52,7 +55,10 @@ function regionMeta(id) {
 }
 
 function mapsUrl(store) {
-  const q = encodeURIComponent(`Funbox ${store.mall} ${store.city}`);
+  if (store.lat != null && store.lng != null) {
+    return `https://www.google.com/maps/search/?api=1&query=${store.lat},${store.lng}`;
+  }
+  const q = encodeURIComponent(`${store.mall} ${store.city}`);
   return `https://www.google.com/maps/search/?api=1&query=${q}`;
 }
 
@@ -160,7 +166,11 @@ function cardHtml(store, isNearest) {
       </div>
       <div class="store-actions">
         <a class="action-btn line-btn" href="${store.line}" target="_blank" rel="noopener noreferrer">${iconPlus} 加入 LINE</a>
-        <a class="action-btn secondary-btn" href="${store.facebook}" target="_blank" rel="noopener noreferrer">${iconOut} 粉專</a>
+        ${
+          store.facebook
+            ? `<a class="action-btn secondary-btn" href="${store.facebook}" target="_blank" rel="noopener noreferrer">${iconOut} 粉專</a>`
+            : ""
+        }
         <a class="action-btn secondary-btn" href="${mapsUrl(store)}" target="_blank" rel="noopener noreferrer">${iconPin} 地圖</a>
       </div>
     </article>
@@ -414,6 +424,28 @@ function setPage(page) {
   render();
 }
 
+function formatSiteUpdatedAt(iso) {
+  return new Intl.DateTimeFormat("zh-TW", {
+    timeZone: "Asia/Taipei",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(new Date(iso));
+}
+
+function renderFooter() {
+  const footer = document.querySelector(".site-footer");
+  if (!footer) return;
+  const label = formatSiteUpdatedAt(SITE_UPDATED_AT);
+  footer.innerHTML = `
+    <p class="footer-credit">作者 ${escapeHtml(SITE_AUTHOR)} · 非官方</p>
+    <p class="footer-updated">最後修改 <time datetime="${SITE_UPDATED_AT}">${escapeHtml(label)}</time></p>
+  `;
+}
+
 function render() {
   document.body.classList.toggle("is-draws", state.page === "draws");
   renderPageNav();
@@ -606,4 +638,5 @@ locateBtn.addEventListener("click", () => {
   });
 });
 
+renderFooter();
 render();
