@@ -1,15 +1,19 @@
 import "./style.css";
 import { REGIONS, stores } from "./stores.js";
-import { DRAW_CITY_FILTERS, draws } from "./draws.js";
+import { DRAW_CITY_FILTERS, draws as bundledDraws } from "./draws.js";
+import { fetchRemoteDraws, titleToEventChip } from "./parse-remote-draws.js";
 
 const SITE_AUTHOR = "Frank CHU";
-const SITE_UPDATED_AT = "2026-08-28T11:52:00+08:00";
+const SITE_UPDATED_AT = "2026-09-03T19:50:00+08:00";
 
 const listEl = document.getElementById("store-list");
 const empty = document.getElementById("empty");
 const statusEl = document.getElementById("status");
 const searchInput = document.getElementById("search");
 const locateBtn = document.getElementById("locate-btn");
+const syncBtn = document.getElementById("sync-btn");
+const syncMeta = document.getElementById("sync-meta");
+const eventChip = document.getElementById("event-chip");
 const filtersEl = document.getElementById("region-filters");
 const pageNav = document.getElementById("page-nav");
 const backTopBtn = document.getElementById("back-top");
@@ -17,6 +21,25 @@ const listActionsEl = document.getElementById("draw-list-actions");
 const incompleteToggle = document.getElementById("incomplete-toggle");
 const VISITED_KEY = "visited_draw_urls";
 const COLLAPSED_KEY = "collapsed_draw_ids";
+const SYNC_AT_KEY = "draws_synced_at";
+const LIVE_DRAWS_KEY = "live_draws_cache";
+
+/** @type {typeof bundledDraws} */
+let draws = loadInitialDraws();
+
+function loadInitialDraws() {
+  try {
+    const cached = JSON.parse(localStorage.getItem(LIVE_DRAWS_KEY) || "null");
+    if (Array.isArray(cached) && cached.length) return cached;
+  } catch {
+    /* ignore bad cache */
+  }
+  return bundledDraws;
+}
+
+function persistLiveDraws() {
+  localStorage.setItem(LIVE_DRAWS_KEY, JSON.stringify(draws));
+}
 
 function pageFromHash() {
   return location.hash === "#stores" ? "stores" : "draws";
@@ -436,6 +459,68 @@ function formatSiteUpdatedAt(iso) {
   }).format(new Date(iso));
 }
 
+function renderSyncMeta(iso, options = {}) {
+  if (!syncMeta) return;
+  syncMeta.classList.toggle("is-error", Boolean(options.error));
+  if (options.error) {
+    syncMeta.textContent = options.error;
+    return;
+  }
+  if (!iso) {
+    syncMeta.textContent = "資料更新：尚未同步（點上方按鈕從遠端抓取）";
+    return;
+  }
+  syncMeta.textContent = `資料更新 ${formatSiteUpdatedAt(iso)}`;
+}
+
+function updateEventChip(title) {
+  if (!eventChip) return;
+  const label = titleToEventChip(title);
+  if (label) eventChip.textContent = label;
+}
+
+async function syncRemoteDraws() {
+  if (!syncBtn) return;
+  syncBtn.disabled = true;
+  syncBtn.classList.remove("is-success");
+  syncBtn.textContent = "更新中…";
+  if (syncMeta) {
+    syncMeta.classList.remove("is-error");
+    syncMeta.textContent = "正在從遠端抓取最新抽選…";
+  }
+
+  try {
+    const { title, draws: next } = await fetchRemoteDraws();
+    draws = next;
+    const syncedAt = new Date().toISOString();
+    localStorage.setItem(SYNC_AT_KEY, syncedAt);
+    persistLiveDraws();
+    updateEventChip(title);
+    state.page = "draws";
+    if (location.hash !== "#draws") {
+      history.replaceState(null, "", "#draws");
+    }
+    render();
+    renderSyncMeta(syncedAt);
+    syncBtn.classList.add("is-success");
+    syncBtn.textContent = `已更新 ${next.length} 家`;
+    statusEl.textContent = `已從遠端同步 ${next.length} 家抽選門市。`;
+  } catch (error) {
+    const message = error?.message || "同步失敗";
+    renderSyncMeta(null, { error: `同步失敗：${message}` });
+    syncBtn.textContent = "更新抽選資料";
+    statusEl.textContent = `無法更新抽選資料：${message}`;
+  } finally {
+    syncBtn.disabled = false;
+    window.setTimeout(() => {
+      if (syncBtn.classList.contains("is-success")) {
+        syncBtn.classList.remove("is-success");
+        syncBtn.textContent = "更新抽選資料";
+      }
+    }, 2400);
+  }
+}
+
 function renderFooter() {
   const footer = document.querySelector(".site-footer");
   if (!footer) return;
@@ -638,5 +723,10 @@ locateBtn.addEventListener("click", () => {
   });
 });
 
+syncBtn?.addEventListener("click", () => {
+  syncRemoteDraws();
+});
+
 renderFooter();
+renderSyncMeta(localStorage.getItem(SYNC_AT_KEY));
 render();

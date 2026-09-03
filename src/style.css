@@ -261,9 +261,80 @@ body.is-draws .event-chip {
   opacity: 0.75;
 }
 
-.locate-btn {
+.header-actions {
   flex-shrink: 0;
-  margin-top: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  min-width: 9.5rem;
+}
+
+.sync-btn {
+  margin: 0;
+  padding: 10px 16px;
+  border: 1px solid color-mix(in srgb, var(--meta) 55%, var(--card-border));
+  border-radius: 10px;
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--meta) 22%, var(--card)),
+    color-mix(in srgb, var(--line-green) 18%, var(--card))
+  );
+  color: var(--meta-strong);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--meta) 18%, transparent);
+  transition:
+    transform 140ms ease,
+    filter 140ms ease,
+    box-shadow 140ms ease;
+  touch-action: manipulation;
+}
+
+.sync-btn:hover {
+  filter: brightness(0.98);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--meta) 16%, transparent);
+}
+
+.sync-btn:active {
+  transform: translateY(1px);
+}
+
+.sync-btn:focus-visible {
+  outline: 2px solid var(--meta);
+  outline-offset: 2px;
+}
+
+.sync-btn:disabled {
+  cursor: wait;
+  opacity: 0.55;
+  transform: none;
+  box-shadow: none;
+}
+
+.sync-btn.is-success {
+  border-color: color-mix(in srgb, var(--line-green) 55%, var(--card-border));
+  color: var(--line-text);
+}
+
+.sync-meta {
+  margin: 0;
+  max-width: 11rem;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.35;
+  text-align: right;
+}
+
+.sync-meta.is-error {
+  color: var(--meta-strong);
+}
+
+.locate-btn {
+  margin: 0;
   padding: 0;
   border: 0;
   background: none;
@@ -1014,6 +1085,21 @@ body.is-draws .toolbar {
   .header-row {
     flex-direction: column;
     gap: 10px;
+  }
+
+  .header-actions {
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .sync-btn {
+    width: 100%;
+  }
+
+  .sync-meta {
+    max-width: none;
+    text-align: left;
   }
 
   .status-row {
