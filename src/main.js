@@ -4,7 +4,7 @@ import { DRAW_CITY_FILTERS, draws as bundledDraws } from "./draws.js";
 import { fetchRemoteDraws, titleToEventChip } from "./parse-remote-draws.js";
 
 const SITE_AUTHOR = "Frank CHU";
-const SITE_UPDATED_AT = "2026-09-03T19:50:00+08:00";
+const SITE_UPDATED_AT = "2026-09-03T21:21:00+08:00";
 
 const listEl = document.getElementById("store-list");
 const empty = document.getElementById("empty");
@@ -23,9 +23,12 @@ const VISITED_KEY = "visited_draw_urls";
 const COLLAPSED_KEY = "collapsed_draw_ids";
 const SYNC_AT_KEY = "draws_synced_at";
 const LIVE_DRAWS_KEY = "live_draws_cache";
+const SYNC_COOLDOWN_MS = 5_000;
 
 /** @type {typeof bundledDraws} */
 let draws = loadInitialDraws();
+let syncCooldownUntil = 0;
+let syncCooldownTimer = 0;
 
 function loadInitialDraws() {
   try {
@@ -479,8 +482,42 @@ function updateEventChip(title) {
   if (label) eventChip.textContent = label;
 }
 
+function clearSyncCooldownTimer() {
+  if (syncCooldownTimer) {
+    window.clearInterval(syncCooldownTimer);
+    syncCooldownTimer = 0;
+  }
+}
+
+function syncCooldownRemainingMs() {
+  return Math.max(0, syncCooldownUntil - Date.now());
+}
+
+function refreshSyncCooldownUi() {
+  if (!syncBtn) return;
+  const remain = syncCooldownRemainingMs();
+  if (remain <= 0) {
+    clearSyncCooldownTimer();
+    syncBtn.disabled = false;
+    syncBtn.classList.remove("is-success");
+    syncBtn.textContent = "更新抽選資料";
+    return;
+  }
+  syncBtn.disabled = true;
+  syncBtn.textContent = `請稍候 ${Math.ceil(remain / 1000)}s`;
+}
+
+function beginSyncCooldown(fromMs = Date.now()) {
+  syncCooldownUntil = fromMs + SYNC_COOLDOWN_MS;
+  clearSyncCooldownTimer();
+  refreshSyncCooldownUi();
+  syncCooldownTimer = window.setInterval(refreshSyncCooldownUi, 250);
+}
+
 async function syncRemoteDraws() {
   if (!syncBtn) return;
+  if (syncCooldownRemainingMs() > 0 || syncBtn.disabled) return;
+
   syncBtn.disabled = true;
   syncBtn.classList.remove("is-success");
   syncBtn.textContent = "更新中…";
@@ -508,16 +545,10 @@ async function syncRemoteDraws() {
   } catch (error) {
     const message = error?.message || "同步失敗";
     renderSyncMeta(null, { error: `同步失敗：${message}` });
-    syncBtn.textContent = "更新抽選資料";
+    syncBtn.classList.remove("is-success");
     statusEl.textContent = `無法更新抽選資料：${message}`;
   } finally {
-    syncBtn.disabled = false;
-    window.setTimeout(() => {
-      if (syncBtn.classList.contains("is-success")) {
-        syncBtn.classList.remove("is-success");
-        syncBtn.textContent = "更新抽選資料";
-      }
-    }, 2400);
+    beginSyncCooldown();
   }
 }
 
