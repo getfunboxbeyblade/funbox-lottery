@@ -4,7 +4,7 @@ import { DRAW_CITY_FILTERS, draws as bundledDraws } from "./draws.js";
 import { fetchRemoteDraws, titleToEventChip } from "./parse-remote-draws.js";
 
 const SITE_AUTHOR = "Frank CHU";
-const SITE_UPDATED_AT = "2026-09-03T21:21:00+08:00";
+const SITE_UPDATED_AT = "2026-09-11T11:05:00+08:00";
 
 const listEl = document.getElementById("store-list");
 const empty = document.getElementById("empty");

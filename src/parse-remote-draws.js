@@ -34,6 +34,15 @@ function cleanStartTime(raw) {
   return raw.replace(/^抽選(時間|日期|開始)[：:]\s*/, "").trim();
 }
 
+/** 新版改成整列可點（data-draw-href），舊版才有 a.draw-link */
+function drawItemUrl(item) {
+  const fromData = item.getAttribute("data-draw-href")?.trim() || "";
+  if (fromData.startsWith("http")) return fromData;
+  const fromLink = item.querySelector("a.draw-link")?.getAttribute("href")?.trim() || "";
+  if (fromLink.startsWith("http")) return fromLink;
+  return item.querySelector("a[href]")?.getAttribute("href")?.trim() || "";
+}
+
 /**
  * @param {string} html
  * @returns {{ title: string, draws: Array<{id:string,name:string,city:string,region:string,startTime:string,notes:string[],items:{product:string,url:string}[]}> }}
@@ -56,8 +65,7 @@ export function parseRemoteDrawsHtml(html) {
       .map((item) => {
         const product =
           item.querySelector(".draw-product")?.textContent?.trim() || "抽選連結";
-        const href = item.querySelector("a.draw-link")?.getAttribute("href") || "";
-        return { product, url: href.trim() };
+        return { product, url: drawItemUrl(item) };
       })
       .filter((item) => item.url.startsWith("http"));
 
