@@ -1,10 +1,10 @@
 import "./style.css";
 import { REGIONS, stores } from "./stores.js";
-import { DRAW_CITY_FILTERS, draws as bundledDraws } from "./draws.js";
+import { DRAW_CITY_FILTERS, DRAW_EVENT_TITLE, draws as bundledDraws } from "./draws.js";
 import { fetchRemoteDraws, titleToEventChip } from "./parse-remote-draws.js";
 
 const SITE_AUTHOR = "Frank CHU";
-const SITE_UPDATED_AT = "2026-09-11T11:05:00+08:00";
+const SITE_UPDATED_AT = "2026-09-11T11:14:00+08:00";
 
 const listEl = document.getElementById("store-list");
 const empty = document.getElementById("empty");
@@ -23,6 +23,7 @@ const VISITED_KEY = "visited_draw_urls";
 const COLLAPSED_KEY = "collapsed_draw_ids";
 const SYNC_AT_KEY = "draws_synced_at";
 const LIVE_DRAWS_KEY = "live_draws_cache";
+const LIVE_TITLE_KEY = "live_draws_title";
 const SYNC_COOLDOWN_MS = 5_000;
 
 /** @type {typeof bundledDraws} */
@@ -30,8 +31,16 @@ let draws = loadInitialDraws();
 let syncCooldownUntil = 0;
 let syncCooldownTimer = 0;
 
+function isCacheNewerThanBundle(syncedAt) {
+  if (!syncedAt) return false;
+  const syncMs = Date.parse(syncedAt);
+  const bundleMs = Date.parse(SITE_UPDATED_AT);
+  return Number.isFinite(syncMs) && Number.isFinite(bundleMs) && syncMs >= bundleMs;
+}
+
 function loadInitialDraws() {
   try {
+    if (!isCacheNewerThanBundle(localStorage.getItem(SYNC_AT_KEY))) return bundledDraws;
     const cached = JSON.parse(localStorage.getItem(LIVE_DRAWS_KEY) || "null");
     if (Array.isArray(cached) && cached.length) return cached;
   } catch {
@@ -40,8 +49,9 @@ function loadInitialDraws() {
   return bundledDraws;
 }
 
-function persistLiveDraws() {
+function persistLiveDraws(title) {
   localStorage.setItem(LIVE_DRAWS_KEY, JSON.stringify(draws));
+  if (title) localStorage.setItem(LIVE_TITLE_KEY, title);
 }
 
 function pageFromHash() {
@@ -531,7 +541,7 @@ async function syncRemoteDraws() {
     draws = next;
     const syncedAt = new Date().toISOString();
     localStorage.setItem(SYNC_AT_KEY, syncedAt);
-    persistLiveDraws();
+    persistLiveDraws(title);
     updateEventChip(title);
     state.page = "draws";
     if (location.hash !== "#draws") {
@@ -759,5 +769,14 @@ syncBtn?.addEventListener("click", () => {
 });
 
 renderFooter();
-renderSyncMeta(localStorage.getItem(SYNC_AT_KEY));
+updateEventChip(
+  isCacheNewerThanBundle(localStorage.getItem(SYNC_AT_KEY))
+    ? localStorage.getItem(LIVE_TITLE_KEY) || DRAW_EVENT_TITLE
+    : DRAW_EVENT_TITLE
+);
+renderSyncMeta(
+  isCacheNewerThanBundle(localStorage.getItem(SYNC_AT_KEY))
+    ? localStorage.getItem(SYNC_AT_KEY)
+    : null
+);
 render();
